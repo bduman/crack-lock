@@ -2,34 +2,28 @@ package com.bduman.cracklock;
 
 public class Main {
     public static void main(String[] args) {
+        CorrectnessEngine correctnessEngine = new CorrectnessEngine();
+
         Digit[] firstHintDigits = generateDigits(6, 9, 0);
-        Hint nNumberIsCorrect = new NNumberIsCorrect(firstHintDigits, 1);
-        Hint nNumberInTheRightPlace = new NNumberInTheRightPlace(firstHintDigits, 1);
+        Hint nNumberInTheRightPlace = new NNumberInTheRightPlace(firstHintDigits, 1, correctnessEngine);
 
         Digit[] secondHintDigits = generateDigits(7, 4, 1);
-        Hint nNumberIsCorrect2 = new NNumberIsCorrect(secondHintDigits, 1);
-        Hint nNumberInTheWrongPlace2 = new NNumberInTheWrongPlace(secondHintDigits, 1);
+        Hint nNumberInTheWrongPlace2 = new NNumberInTheWrongPlace(secondHintDigits, 1, correctnessEngine);
 
         Digit[] thirdHintDigits = generateDigits(5, 0, 4);
-        Hint nNumberIsCorrect3 = new NNumberIsCorrect(thirdHintDigits, 2);
-        Hint nNumberInTheWrongPlace3 = new NNumberInTheWrongPlace(thirdHintDigits, 2);
+        Hint nNumberInTheWrongPlace3 = new NNumberInTheWrongPlace(thirdHintDigits, 2, correctnessEngine);
 
         Digit[] fourthHintDigits = generateDigits(3, 8, 7);
-        Hint nothingIsCorrect = new NothingIsCorrect(fourthHintDigits);
+        Hint nothingIsCorrect = new NothingIsCorrect(fourthHintDigits, correctnessEngine);
 
         Digit[] fifthHintDigits = generateDigits(2, 1, 9);
-        Hint nNumberIsCorrect5 = new NNumberIsCorrect(fifthHintDigits, 1);
-        Hint nNumberInTheWrongPlace5 = new NNumberIsCorrect(fifthHintDigits, 1);
+        Hint nNumberInTheWrongPlace5 = new NNumberInTheWrongPlace(fifthHintDigits, 1, correctnessEngine);
 
         Hint andHints = new AndHints(
-                nNumberIsCorrect,
                 nNumberInTheRightPlace,
-                nNumberIsCorrect2,
                 nNumberInTheWrongPlace2,
-                nNumberIsCorrect3,
                 nNumberInTheWrongPlace3,
                 nothingIsCorrect,
-                nNumberIsCorrect5,
                 nNumberInTheWrongPlace5
         );
 

@@ -1,32 +1,30 @@
 package com.bduman.cracklock;
 
+import java.util.Map;
+
 public class NNumberInTheRightPlace implements Hint {
     private final Digit[] hintDigits;
     private final int n;
+    private final CorrectnessEngine correctnessEngine;
 
-    public NNumberInTheRightPlace(Digit[] hintDigits, int n) {
+    public NNumberInTheRightPlace(Digit[] hintDigits, int n, CorrectnessEngine correctnessEngine) {
         this.hintDigits = hintDigits;
         this.n = n;
+        this.correctnessEngine = correctnessEngine;
     }
 
     @Override
     public boolean apply(Digit[] digits) {
-        int matched = 0;
-        for (int i = 0; i < digits.length; i++) {
-            Digit digit = digits[i];
-            Digit hintDigit = hintDigits[i];
+        Map<CorrectnessLevel, Integer> correctnessMap = correctnessEngine.process(hintDigits, digits);
+        Integer actualN = correctnessMap.get(CorrectnessLevel.CorrectAndRightPlace);
+        boolean result = actualN == n;
 
-            int number = digit.getNumber();
-            int hintNumber = hintDigit.getNumber();
-            if (hintNumber == number) {
-                matched++;
-            }
-        }
-
-        if (n != matched) {
+        Integer wrongCount = correctnessMap.get(CorrectnessLevel.Wrong);
+        int othersCount = digits.length - n;
+        if (wrongCount != othersCount) {
             return false;
         }
 
-        return true;
+        return result;
     }
 }
