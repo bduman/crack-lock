@@ -44,8 +44,9 @@ public class Main {
     private static Digit[] generateDigits(int... numbers) {
         Digit[] result = new Digit[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
+            int place = i;
             int number = numbers[i];
-            result[i] = new Digit(number);
+            result[i] = new Digit(place, number);
         }
 
         return result;

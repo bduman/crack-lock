@@ -7,10 +7,8 @@ public class CorrectnessEngine {
     public Map<CorrectnessLevel, Integer> process(Digit[] hintDigits, Digit[] digits) {
         Map<CorrectnessLevel, Integer> result = initResult();
 
-        for (int i = 0; i < digits.length; i++) {
-            Digit digit = digits[i];
-
-            CorrectnessLevel correctness = getCorrectness(hintDigits, i, digit);
+        for (Digit digit : digits) {
+            CorrectnessLevel correctness = getCorrectness(hintDigits, digit);
             result.merge(correctness, 1, Integer::sum);
         }
 
@@ -26,8 +24,10 @@ public class CorrectnessEngine {
         return result;
     }
 
-    private CorrectnessLevel getCorrectness(Digit[] hintDigits, int place, Digit digit) {
+    private CorrectnessLevel getCorrectness(Digit[] hintDigits, Digit digit) {
+        int place = digit.getPlace();
         Digit hintDigit = hintDigits[place];
+
         int hintNumber = hintDigit.getNumber();
         int number = digit.getNumber();
 
