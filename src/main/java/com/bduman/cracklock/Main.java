@@ -1,22 +1,25 @@
 package com.bduman.cracklock;
 
+import java.util.List;
+
 public class Main {
+
     public static void main(String[] args) {
         CorrectnessEngine correctnessEngine = new CorrectnessEngine();
 
-        Digit[] firstHintDigits = generateDigits(6, 9, 0);
+        Digit[] firstHintDigits = Digits.generate(690);
         Hint nNumberInTheRightPlace = new NNumberInTheRightPlace(firstHintDigits, 1, correctnessEngine);
 
-        Digit[] secondHintDigits = generateDigits(7, 4, 1);
+        Digit[] secondHintDigits = Digits.generate(741);
         Hint nNumberInTheWrongPlace2 = new NNumberInTheWrongPlace(secondHintDigits, 1, correctnessEngine);
 
-        Digit[] thirdHintDigits = generateDigits(5, 0, 4);
+        Digit[] thirdHintDigits = Digits.generate(504);
         Hint nNumberInTheWrongPlace3 = new NNumberInTheWrongPlace(thirdHintDigits, 2, correctnessEngine);
 
-        Digit[] fourthHintDigits = generateDigits(3, 8, 7);
+        Digit[] fourthHintDigits = Digits.generate(387);
         Hint nothingIsCorrect = new NothingIsCorrect(fourthHintDigits, correctnessEngine);
 
-        Digit[] fifthHintDigits = generateDigits(2, 1, 9);
+        Digit[] fifthHintDigits = Digits.generate(219);
         Hint nNumberInTheWrongPlace5 = new NNumberInTheWrongPlace(fifthHintDigits, 1, correctnessEngine);
 
         Hint andHints = new AndHints(
@@ -27,28 +30,15 @@ public class Main {
                 nNumberInTheWrongPlace5
         );
 
-        for (int i = 100; i < 1000; i++) {
-            int d1 = i / 100;
-            int d2 = (i % 100) / 10;
-            int d3 = (i % 100) % 10;
-
-            Digit[] digits = generateDigits(d1, d2, d3);
+        // TODO: refactor later
+        List<Code> codes = Codes.generate(3);
+        for (Code code : codes) {
+            Digit[] digits = code.getDigits();
             boolean result = andHints.apply(digits);
             if (result) {
-                System.out.println(i);
+                int number = code.getNumber();
+                System.out.println(number);
             }
         }
-
-    }
-
-    private static Digit[] generateDigits(int... numbers) {
-        Digit[] result = new Digit[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            int place = i;
-            int number = numbers[i];
-            result[i] = new Digit(place, number);
-        }
-
-        return result;
     }
 }

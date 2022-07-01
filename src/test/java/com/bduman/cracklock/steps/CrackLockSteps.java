@@ -50,15 +50,13 @@ public class CrackLockSteps {
 
         // TODO: refactor later
         results = new ArrayList<>();
-        for (int i = 100; i < 1000; i++) {
-            int d1 = i / 100;
-            int d2 = (i % 100) / 10;
-            int d3 = (i % 100) % 10;
-
-            Digit[] digits = generateDigits(d1, d2, d3);
+        List<Code> codes = Codes.generate(3);
+        for (Code code : codes) {
+            Digit[] digits = code.getDigits();
             boolean result = andHints.apply(digits);
             if (result) {
-                results.add(i);
+                int number = code.getNumber();
+                results.add(number);
             }
         }
     }
@@ -67,16 +65,5 @@ public class CrackLockSteps {
     public void CodesShouldBe(int[] expectedCodes) {
         int[] actualCodes = results.stream().mapToInt(Integer::intValue).toArray();
         Assert.assertArrayEquals(expectedCodes, actualCodes);
-    }
-
-    private static Digit[] generateDigits(int... numbers) {
-        Digit[] result = new Digit[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            int place = i;
-            int number = numbers[i];
-            result[i] = new Digit(place, number);
-        }
-
-        return result;
     }
 }

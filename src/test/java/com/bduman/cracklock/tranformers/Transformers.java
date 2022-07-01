@@ -1,6 +1,7 @@
 package com.bduman.cracklock.tranformers;
 
 import com.bduman.cracklock.Digit;
+import com.bduman.cracklock.Digits;
 import io.cucumber.java.ParameterType;
 
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class Transformers {
         for (int i = 0; i < numbers.length; i++) {
             int place = i;
             int number = numbers[i];
-            result[i] = new Digit(place, number);
+            result[i] = Digits.generate(place, number);
         }
 
         return result;
